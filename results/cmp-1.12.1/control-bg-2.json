@@ -1,0 +1,13 @@
+{
+  "label": "control-bg-2",
+  "notes": "control-bg",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12218,
+  "window_s": 59.1,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 0.444,
+  "wakeups_per_s": 2.182,
+  "ctx_switches_per_s": 56.564,
+  "threads": 10
+}

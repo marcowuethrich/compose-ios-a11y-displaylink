@@ -1,0 +1,13 @@
+{
+  "label": "control-fg-1",
+  "notes": "control-fg",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12213,
+  "window_s": 58.9,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 0.102,
+  "wakeups_per_s": 2.155,
+  "ctx_switches_per_s": 6.889,
+  "threads": 7
+}

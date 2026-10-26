@@ -1,0 +1,13 @@
+{
+  "label": "read-bg-4",
+  "notes": "read-bg",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12243,
+  "window_s": 59.1,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 1.266,
+  "wakeups_per_s": 63.018,
+  "ctx_switches_per_s": 133.467,
+  "threads": 10
+}

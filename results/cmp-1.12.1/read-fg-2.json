@@ -1,0 +1,13 @@
+{
+  "label": "read-fg-2",
+  "notes": "read-fg",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12219,
+  "window_s": 59.1,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 0.983,
+  "wakeups_per_s": 94.484,
+  "ctx_switches_per_s": 100.425,
+  "threads": 9
+}

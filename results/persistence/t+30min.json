@@ -1,0 +1,13 @@
+{
+  "label": "t+30min",
+  "notes": "read-bg, same process, t+30min after leaving the app",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12290,
+  "window_s": 59.1,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 1.274,
+  "wakeups_per_s": 62.954,
+  "ctx_switches_per_s": 136.81,
+  "threads": 11
+}
