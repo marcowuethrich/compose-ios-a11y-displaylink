@@ -1,0 +1,57 @@
+name: CmpA11yRepro
+options:
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+configFiles:
+  Debug: Configuration/Config.xcconfig
+  Release: Configuration/Config.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+targets:
+  CmpA11yRepro:
+    type: application
+    platform: iOS
+    sources: [ReproApp]
+    preBuildScripts:
+      - name: Compile Kotlin framework
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "YES" = "$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED" ]; then
+            exit 0
+          fi
+          cd "$SRCROOT/.."
+          ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode ${REPRO_GRADLE_ARGS}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(REPRO_APP_BUNDLE_ID)
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: ReproApp/Info.plist
+        FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../composeApp/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
+        OTHER_LDFLAGS: ["$(inherited)", "-framework", "ComposeApp"]
+        TARGETED_DEVICE_FAMILY: "1"
+  ReproUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [ReproUITests]
+    # Deliberately no TEST_TARGET_NAME / app dependency: the test attaches to the app that is
+    # already running (XCUIApplication(bundleIdentifier:)), so running it neither reinstalls nor
+    # relaunches nor terminates the app under measurement.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(REPRO_APP_BUNDLE_ID).UITests
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: ReproUITests/Info.plist
+schemes:
+  CmpA11yRepro:
+    build:
+      targets:
+        CmpA11yRepro: all
+        ReproUITests: [test]
+    test:
+      config: Release
+      targets: [ReproUITests]
+    run:
+      config: Release
