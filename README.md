@@ -7,7 +7,7 @@ ever stops it: the app's main thread wakes on every display frame for as long as
 in front and behind Home.
 
 - YouTrack issue: [CMP-11004](https://youtrack.jetbrains.com/issue/CMP-11004)
-- Upstream fix: _TBD (link to the compose-multiplatform-core pull request)_
+- Upstream fix: [JetBrains/compose-multiplatform-core#3539](https://github.com/JetBrains/compose-multiplatform-core/pull/3539) (under review)
 
 ## Why it matters
 
