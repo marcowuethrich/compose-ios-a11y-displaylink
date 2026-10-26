@@ -64,7 +64,7 @@ Reading the numbers:
 - The floor after a read is about 62 wakeups/s: one per frame of the 60 Hz display plus the app's
   baseline of about 2. Some runs sit higher (up to 118/s); the cause of that spread was not
   investigated. The control runs never left 2.1–2.3/s.
-- Behind Home, (d) − (c) is the cost of the bug alone: about +0.8 % of a core and +61 wakeups/s.
+- Behind Home, (c) − (d) is the cost of the bug alone: about +0.8 % of a core and +61 wakeups/s.
   The 0.44 % baseline in (d) is the silent audio itself.
 - In front, CMP's own render loop is idle on a static screen (control: 2 wakeups/s), so the extra
   60+ wakeups/s there are the accessibility display link too.
