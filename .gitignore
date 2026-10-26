@@ -1,0 +1,13 @@
+.gradle/
+.kotlin/
+build/
+*.iml
+.idea/
+local.properties
+.DS_Store
+# Xcode
+xcuserdata/
+DerivedData/
+iosApp/Configuration/Local.xcconfig
+# Measurement output (kept out of git; results are summarised in README.md)
+out/
