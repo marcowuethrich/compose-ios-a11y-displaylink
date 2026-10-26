@@ -35,7 +35,7 @@ settle=${SETTLE_SECONDS:-10}
 app=$dd/Build/Products/Release-iphoneos/CmpA11yRepro.app
 xctestrun=$(ls "$dd"/Build/Products/*.xctestrun | head -1)
 bundle=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")
-udid=${UDID:?set UDID to the iPhone's identifier (xcrun devicectl list devices)}
+udid=${UDID:?set UDID to the iPhone identifier (xcrun devicectl list devices)}
 pmd=(uvx --python 3.13 --with pymobiledevice3==11.26.0 python -I scripts/sample.py)
 mkdir -p "$out"
 
