@@ -17,10 +17,11 @@ A suspended iOS app costs nothing, so most apps never notice. Two groups do:
   and so does the display link. In this repository's measurement the app's CPU almost triples and
   its wakeups rise from about 2 to about 64 per second behind Home, with nothing on screen and no
   work to do. Frequent wakeups keep the CPU from idling deeply, which is what costs battery.
-- **People who use assistive technology.** VoiceOver reads the tree continuously, and CMP skips the
-  cleanup while VoiceOver focus is inside the Compose view (see below), so for them the display link
-  very likely runs the whole time the app is open, static screens included. That has not been
-  measured here yet (see *Open points*).
+- **People who use assistive technology.** CMP skips the cleanup while VoiceOver focus is inside the
+  Compose view (see below), so for a VoiceOver user the display link runs the whole time the app is
+  open, static screens included. Measured: with VoiceOver on and focus resting on the static screen,
+  the app sits at 62 wakeups/s and 0.8 % CPU, against 2/s and 0.1 % for the same screen without
+  VoiceOver.
 
 The finding came from a production app with a background audio mode: paused behind Home after a
 UI-test runner had read its tree, it used 1.56 % CPU at about 132 wakeups/s, against 0.38 % and
@@ -58,6 +59,19 @@ wakeups for the process. Mean ± standard deviation, range in brackets.
 | 2 min | 1.29 | 63.0 |
 | 10 min | 1.27 | 62.0 |
 | 30 min | 1.27 | 63.0 |
+
+**With VoiceOver on** (CMP 1.12.1). VoiceOver switched on in Settings, the app launched, VoiceOver's
+focus left where it landed on the first element, nothing touched; three consecutive 60 s windows of
+one process, starting 10 s after launch:
+
+| Window | CPU % | Wakeups/s |
+|---|---|---|
+| 1 (10–70 s after launch) | 0.94 | 92.0 |
+| 2 | 0.80 | 62.0 |
+| 3 | 0.80 | 62.0 |
+
+From the second minute on it is the same per-frame floor as after a one-shot UI-test read, and it
+does not decay. The first window is higher while VoiceOver is still reading the new screen.
 
 Reading the numbers:
 
@@ -207,10 +221,8 @@ The per-run JSON summaries behind the tables are in [`results/`](results/).
 
 ## Open points
 
-- **VoiceOver itself** was not measured: the device tooling used here cannot switch VoiceOver on.
-  With VoiceOver on, open the app, put focus on any element, leave the screen alone and sample
-  (`scripts/sample.py` directly). Expectation from the source: the same ~60 extra wakeups/s for as
-  long as the app is open.
+- The VoiceOver case was measured in the foreground only (above). Behind Home with VoiceOver on was
+  not measured separately.
 - The upward spread of the wakeup rate in some runs (62 to 118/s) is not explained.
 
 ## Layout

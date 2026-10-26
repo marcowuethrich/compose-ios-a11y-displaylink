@@ -1,0 +1,13 @@
+{
+  "label": "vo-fg-3",
+  "notes": "",
+  "bundle": "io.github.marcowuethrich.CmpA11yRepro",
+  "pid": 12344,
+  "window_s": 59.1,
+  "wall_s": 60.0,
+  "snapshots": 60,
+  "cpu_pct": 0.801,
+  "wakeups_per_s": 62.03,
+  "ctx_switches_per_s": 67.679,
+  "threads": 9
+}
