@@ -13,7 +13,7 @@
 # Runs are interleaved (a b c d a b c d ...) so slow drift on the device spreads over all of them.
 # Needs: scripts/build.sh run first, `uv` (for pymobiledevice3), the iPhone unlocked on USB with
 # auto-lock off (Settings > Display & Brightness > Auto-Lock > Never) for the foreground scenarios.
-# Environment: UDID (default: the one connected iPhone), DERIVED_DATA (default build/dd),
+# Environment: UDID (required; `xcrun devicectl list devices` shows it), DERIVED_DATA (default build/dd),
 # SETTLE_SECONDS (default 10), NO_INSTALL=1 to skip installing the app first.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -35,8 +35,7 @@ settle=${SETTLE_SECONDS:-10}
 app=$dd/Build/Products/Release-iphoneos/CmpA11yRepro.app
 xctestrun=$(ls "$dd"/Build/Products/*.xctestrun | head -1)
 bundle=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")
-udid=${UDID:-$(xcrun xctrace list devices 2>/dev/null | awk '/^== Devices ==/{d=1;next} /^== /{d=0} d && /\([0-9A-F-]{25}\)$/ {gsub(/.*\(|\)$/,""); print; exit}')}
-[[ -n "$udid" ]] || { echo "no iPhone found; set UDID" >&2; exit 2; }
+udid=${UDID:?set UDID to the iPhone's identifier (xcrun devicectl list devices)}
 pmd=(uvx --python 3.13 --with pymobiledevice3==11.26.0 python -I scripts/sample.py)
 mkdir -p "$out"
 
