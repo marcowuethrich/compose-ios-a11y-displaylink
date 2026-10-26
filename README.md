@@ -6,7 +6,7 @@ the Accessibility Inspector), CMP starts a `CADisplayLink`. If the screen then s
 ever stops it: the app's main thread wakes on every display frame for as long as the process lives,
 in front and behind Home.
 
-- YouTrack issue: _TBD (link once filed)_
+- YouTrack issue: [CMP-11004](https://youtrack.jetbrains.com/issue/CMP-11004)
 - Upstream fix: _TBD (link to the compose-multiplatform-core pull request)_
 
 ## Why it matters
