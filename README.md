@@ -7,7 +7,18 @@ ever stops it: the app's main thread wakes on every display frame for as long as
 in front and behind Home.
 
 - YouTrack issue: [CMP-11004](https://youtrack.jetbrains.com/issue/CMP-11004)
-- Upstream fix: [JetBrains/compose-multiplatform-core#3539](https://github.com/JetBrains/compose-multiplatform-core/pull/3539) (merged 2026-11-03)
+- Upstream fix: [JetBrains/compose-multiplatform-core#3539](https://github.com/JetBrains/compose-multiplatform-core/pull/3539) (merged 2026-11-03 as `89d4a928277`)
+- Status: **fixed.** CMP-11004 is marked Fixed, targeted for CMP **1.14.0-alpha01**. No published
+  release contains the fix yet (1.13.0-beta01 and 1.12.2 do not).
+
+## The merged fix
+
+Different from the proposal below, following JetBrains' review: the accessibility mediator no longer
+has a display link of its own. The scroll-into-view animation runs on the window's existing frame
+clock (`FrameChoreographer`), which requests frames only while something waits for one and pauses
+its display link two frames later. So nothing ticks after a tree read, also with VoiceOver focus on
+a static screen. Measured on the iPhone 12 Pro with an earlier version of the fix, every scenario
+below dropped to the no-read control (about 2 wakeups/s); the numbers are in the PR.
 
 ## Why it matters
 
@@ -114,9 +125,9 @@ all of them are the main run loop waking up and dispatching the frame (`mach_msg
 `DisplayLinkListener$start$1.animationDidUpdate` itself shows in one sample. The cost is the
 per-frame wakeup, not work done in Kotlin.
 
-## Proposed fix
+## Originally proposed fix
 
-Two independent changes; the first one alone removes the cost in every scenario above.
+Kept for the record; the merged fix is described above. Two independent changes; the first one alone removes the cost in every scenario above.
 
 1. **Run the display link only while it is needed.** Start it in `scrollToAccessibilityElement` when
    a scroll job is launched, and invalidate it when that job completes or is cancelled, instead of
